@@ -1,0 +1,240 @@
+[
+  {
+    "id": "essay",
+    "name": "Essay",
+    "studyHours": 80,
+    "difficulty": "Medium",
+    "pyqWeightage": "High",
+    "revisionPriority": "High",
+    "papers": ["Essay"],
+    "active": true
+  },
+  {
+    "id": "ancient-history",
+    "name": "Ancient History",
+    "studyHours": 60,
+    "difficulty": "Medium",
+    "pyqWeightage": "Medium",
+    "revisionPriority": "Medium",
+    "papers": ["Prelims", "GS I"],
+    "active": true
+  },
+  {
+    "id": "medieval-history",
+    "name": "Medieval History",
+    "studyHours": 40,
+    "difficulty": "Easy",
+    "pyqWeightage": "Low",
+    "revisionPriority": "Low",
+    "papers": ["Prelims", "GS I"],
+    "active": true
+  },
+  {
+    "id": "modern-history",
+    "name": "Modern History",
+    "studyHours": 100,
+    "difficulty": "Medium",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "Highest",
+    "papers": ["Prelims", "GS I"],
+    "active": true
+  },
+  {
+    "id": "art-culture",
+    "name": "Art & Culture",
+    "studyHours": 60,
+    "difficulty": "Medium",
+    "pyqWeightage": "Medium",
+    "revisionPriority": "Medium",
+    "papers": ["Prelims", "GS I"],
+    "active": true
+  },
+  {
+    "id": "indian-geography",
+    "name": "Indian Geography",
+    "studyHours": 80,
+    "difficulty": "Medium",
+    "pyqWeightage": "High",
+    "revisionPriority": "High",
+    "papers": ["Prelims", "GS I"],
+    "active": true
+  },
+  {
+    "id": "world-geography",
+    "name": "World Geography",
+    "studyHours": 50,
+    "difficulty": "Medium",
+    "pyqWeightage": "Medium",
+    "revisionPriority": "Medium",
+    "papers": ["Prelims", "GS I"],
+    "active": true
+  },
+  {
+    "id": "society",
+    "name": "Indian Society",
+    "studyHours": 50,
+    "difficulty": "Medium",
+    "pyqWeightage": "Medium",
+    "revisionPriority": "Medium",
+    "papers": ["GS I"],
+    "active": true
+  },
+  {
+    "id": "indian-polity",
+    "name": "Indian Polity",
+    "studyHours": 120,
+    "difficulty": "Medium",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "Highest",
+    "papers": ["Prelims", "GS II"],
+    "active": true
+  },
+  {
+    "id": "governance",
+    "name": "Governance",
+    "studyHours": 60,
+    "difficulty": "Medium",
+    "pyqWeightage": "Medium",
+    "revisionPriority": "Medium",
+    "papers": ["GS II"],
+    "active": true
+  },
+  {
+    "id": "international-relations",
+    "name": "International Relations",
+    "studyHours": 70,
+    "difficulty": "Medium",
+    "pyqWeightage": "High",
+    "revisionPriority": "High",
+    "papers": ["GS II"],
+    "active": true
+  },
+  {
+    "id": "economy",
+    "name": "Economy",
+    "studyHours": 140,
+    "difficulty": "Hard",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "Highest",
+    "papers": ["Prelims", "GS III"],
+    "active": true
+  },
+  {
+    "id": "agriculture",
+    "name": "Agriculture",
+    "studyHours": 40,
+    "difficulty": "Medium",
+    "pyqWeightage": "Low",
+    "revisionPriority": "Low",
+    "papers": ["GS III"],
+    "active": true
+  },
+  {
+    "id": "environment",
+    "name": "Environment & Ecology",
+    "studyHours": 90,
+    "difficulty": "Medium",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "High",
+    "papers": ["Prelims", "GS III"],
+    "active": true
+  },
+  {
+    "id": "science-tech",
+    "name": "Science & Technology",
+    "studyHours": 80,
+    "difficulty": "Medium",
+    "pyqWeightage": "High",
+    "revisionPriority": "High",
+    "papers": ["Prelims", "GS III"],
+    "active": true
+  },
+  {
+    "id": "disaster-management",
+    "name": "Disaster Management",
+    "studyHours": 30,
+    "difficulty": "Easy",
+    "pyqWeightage": "Low",
+    "revisionPriority": "Low",
+    "papers": ["GS III"],
+    "active": true
+  },
+  {
+    "id": "internal-security",
+    "name": "Internal Security",
+    "studyHours": 50,
+    "difficulty": "Medium",
+    "pyqWeightage": "Medium",
+    "revisionPriority": "Medium",
+    "papers": ["GS III"],
+    "active": true
+  },
+  {
+    "id": "ethics",
+    "name": "Ethics, Integrity & Aptitude",
+    "studyHours": 100,
+    "difficulty": "Medium",
+    "pyqWeightage": "High",
+    "revisionPriority": "High",
+    "papers": ["GS IV"],
+    "active": true
+  },
+  {
+    "id": "psir-paper-1",
+    "name": "PSIR Paper I",
+    "studyHours": 180,
+    "difficulty": "Hard",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "Highest",
+    "papers": ["Optional"],
+    "active": true
+  },
+  {
+    "id": "psir-paper-2",
+    "name": "PSIR Paper II",
+    "studyHours": 180,
+    "difficulty": "Hard",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "Highest",
+    "papers": ["Optional"],
+    "active": true
+  },
+  {
+    "id": "current-affairs",
+    "name": "Current Affairs",
+    "studyHours": 365,
+    "difficulty": "Medium",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "Highest",
+    "papers": [
+      "Prelims",
+      "GS I",
+      "GS II",
+      "GS III",
+      "GS IV",
+      "Essay",
+      "Optional"
+    ],
+    "active": true
+  },
+  {
+    "id": "csat",
+    "name": "CSAT",
+    "studyHours": 80,
+    "difficulty": "Medium",
+    "pyqWeightage": "Very High",
+    "revisionPriority": "Medium",
+    "papers": ["CSAT"],
+    "active": true
+  },
+  {
+    "id": "interview",
+    "name": "Personality Test",
+    "studyHours": 40,
+    "difficulty": "Medium",
+    "pyqWeightage": "High",
+    "revisionPriority": "Medium",
+    "papers": ["Interview"],
+    "active": true
+  }
+]

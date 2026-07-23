@@ -1,0 +1,39 @@
+[
+  {
+    "id": "prelims-2025-gs1-q001",
+    "year": 2025,
+    "exam": "Prelims",
+    "paper": "GS-I",
+    "questionNumber": 1,
+    "type": "MCQ",
+    "subjectId": "indian-polity",
+    "topic": "Fundamental Rights",
+    "subtopic": "Article 32",
+    "difficulty": "Medium",
+    "marks": 2,
+    "negativeMarks": 0.66,
+    "question": "",
+    "options": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "correctAnswer": "B",
+    "explanation": "",
+    "source": "UPSC CSE 2025",
+    "tags": [
+      "Constitution",
+      "Fundamental Rights"
+    ],
+    "linkedResources": [
+      "polity-laxmikanth",
+      "polity-ncert-11"
+    ],
+    "linkedCurrentAffairs": [],
+    "aiHints": [
+      "Frequently asked concept",
+      "Static + Current linkage"
+    ]
+  }
+]

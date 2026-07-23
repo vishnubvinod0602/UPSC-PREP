@@ -12,6 +12,8 @@ import { PlannerStats } from "@/features/planner/PlannerStats";
 
 import { PlannerProgress } from "@/features/planner/PlannerProgress";
 
+import { AddTaskDialog } from "@/features/planner/AddTaskDialog";
+
 export default function PlannerPage() {
   const { tasks, toggleTask } = usePlannerStore();
 
@@ -23,10 +25,14 @@ export default function PlannerPage() {
         <Header />
 
         <PageContainer>
-          <PageTitle
-            title="Planner"
-            subtitle="Plan and manage your daily UPSC study schedule."
-          />
+       <div className="mb-6 flex items-center justify-between">
+  <PageTitle
+    title="Planner"
+    subtitle="Plan and manage your daily UPSC study schedule."
+  />
+
+  <AddTaskDialog />
+</div> 
         
 
 <PlannerStats />
@@ -40,15 +46,25 @@ export default function PlannerPage() {
                 key={task.id}
                 className="flex items-center justify-between rounded-2xl border border-border bg-card p-5 shadow-sm"
               >
-                <div>
-                  <h2 className="text-lg font-semibold">
-                    {task.title}
-                  </h2>
+                <div className="flex-1">
+  <h2 className="text-lg font-semibold">
+    {task.title}
+  </h2>
 
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {task.start} — {task.end}
-                  </p>
-                </div>
+  <p className="mt-1 text-sm text-muted-foreground">
+    {task.start} — {task.end}
+  </p>
+
+  <div className="mt-3 flex gap-2">
+    <span className="rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
+      {task.subject}
+    </span>
+
+    <span className="rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
+      {task.priority}
+    </span>
+  </div>
+</div>
 
                 <button
                   onClick={() => toggleTask(task.id)}

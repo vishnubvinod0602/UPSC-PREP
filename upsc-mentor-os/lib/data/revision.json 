@@ -1,0 +1,72 @@
+[
+  {
+    "id": "rev-polity-fr",
+    "entityType": "topic",
+    "entityId": "fundamental-rights",
+    "subjectId": "indian-polity",
+
+    "title": "Fundamental Rights",
+
+    "revisionType": "Spaced",
+
+    "priority": "High",
+
+    "difficulty": 3,
+
+    "estimatedMinutes": 45,
+
+    "stages": [
+      {
+        "day": 0,
+        "label": "Initial Learning"
+      },
+      {
+        "day": 1,
+        "label": "Revision 1"
+      },
+      {
+        "day": 3,
+        "label": "Revision 2"
+      },
+      {
+        "day": 7,
+        "label": "Revision 3"
+      },
+      {
+        "day": 15,
+        "label": "Revision 4"
+      },
+      {
+        "day": 30,
+        "label": "Revision 5"
+      },
+      {
+        "day": 60,
+        "label": "Revision 6"
+      },
+      {
+        "day": 120,
+        "label": "Final Revision"
+      }
+    ],
+
+    "revisionMethods": [
+      "Read Notes",
+      "Solve PYQs",
+      "Solve MCQs",
+      "Recall",
+      "Mind Map"
+    ],
+
+    "resourceIds": [
+      "polity-laxmikanth",
+      "polity-ncert-11"
+    ],
+
+    "pyqIds": [],
+
+    "testIds": [],
+
+    "active": true
+  }
+]

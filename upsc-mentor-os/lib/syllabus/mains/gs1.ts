@@ -1,0 +1,81 @@
+export const GS1_SYLLABUS = {
+  paper: "GS I",
+  name: "General Studies Paper I",
+
+  subjects: [
+    {
+      name: "History",
+
+      topics: [
+        "Indian Culture",
+        "Art Forms",
+        "Literature",
+        "Architecture",
+        "Ancient India",
+        "Medieval India",
+        "Modern Indian History",
+        "The Freedom Struggle",
+        "Important Personalities",
+        "Post-independence Consolidation",
+        "Reorganization of States",
+        "World History",
+        "American Revolution",
+        "French Revolution",
+        "Industrial Revolution",
+        "World Wars",
+        "Colonization",
+        "Decolonization",
+        "Communism",
+        "Capitalism",
+        "Socialism",
+      ],
+    },
+
+    {
+      name: "Society",
+
+      topics: [
+        "Salient Features of Indian Society",
+        "Diversity of India",
+        "Role of Women",
+        "Women's Organizations",
+        "Population",
+        "Demographic Issues",
+        "Poverty",
+        "Developmental Issues",
+        "Urbanization",
+        "Urban Problems",
+        "Urban Remedies",
+        "Globalization",
+        "Effects of Globalization",
+        "Social Empowerment",
+        "Communalism",
+        "Regionalism",
+        "Secularism",
+      ],
+    },
+
+    {
+      name: "Geography",
+
+      topics: [
+        "Physical Geography",
+        "World Physical Geography",
+        "Distribution of Natural Resources",
+        "South Asia",
+        "Indian Subcontinent",
+        "Primary Sector Industries",
+        "Secondary Sector Industries",
+        "Tertiary Sector Industries",
+        "Location Factors",
+        "Earthquakes",
+        "Tsunami",
+        "Volcanic Activity",
+        "Cyclones",
+        "Geophysical Phenomena",
+        "Geographical Features",
+        "Changes in Critical Geographical Features",
+      ],
+    },
+  ],
+} as const;
