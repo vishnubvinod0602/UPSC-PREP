@@ -2,21 +2,12 @@
 
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
-
 import { PageContainer } from "@/components/common/PageContainer";
 import { PageTitle } from "@/components/common/PageTitle";
 
-import { usePlannerStore } from "@/store/planner";
-
-import { PlannerStats } from "@/features/planner/PlannerStats";
-
-import { PlannerProgress } from "@/features/planner/PlannerProgress";
-
-import { AddTaskDialog } from "@/features/planner/AddTaskDialog";
+import { UPSC_SUBJECTS } from "@/lib/constants/subjects";
 
 export default function PlannerPage() {
-  const { tasks, toggleTask } = usePlannerStore();
-
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
@@ -25,71 +16,37 @@ export default function PlannerPage() {
         <Header />
 
         <PageContainer>
-       <div className="mb-6 flex items-center justify-between">
-  <PageTitle
-    title="Planner"
-    subtitle="Plan and manage your daily UPSC study schedule."
-  />
+          <div className="mb-8">
+            <PageTitle
+              title="Planner"
+              subtitle="Create and manage your UPSC study plan."
+            />
+          </div>
 
-  <AddTaskDialog />
-</div> 
-        
-
-<PlannerStats />
-
-<PlannerProgress />
-
-
-          <div className="space-y-4">
-            {tasks.map((task) => (
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {UPSC_SUBJECTS.map((subject) => (
               <div
-                key={task.id}
-                className="flex items-center justify-between rounded-2xl border border-border bg-card p-5 shadow-sm"
+                key={subject.id}
+                className="rounded-2xl border border-border bg-card p-6 shadow-sm"
               >
-                <div className="flex-1">
-  <h2 className="text-lg font-semibold">
-    {task.title}
-  </h2>
+                <h2 className="text-lg font-semibold">
+                  {subject.name}
+                </h2>
 
-  <p className="mt-1 text-sm text-muted-foreground">
-    {task.start} — {task.end}
-  </p>
+               
 
-  <div className="mt-3 flex gap-2">
-    <span className="rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
-      {task.subject}
-    </span>
-
-    <span className="rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
-      {task.priority}
-    </span>
-  </div>
-</div>
-
-                <button
-                  onClick={() => toggleTask(task.id)}
-                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    task.completed
-                      ? "bg-green-600 text-white"
-                      : "bg-indigo-600 text-white hover:bg-indigo-700"
-                  }`}
-                >
-                  {task.completed ? "Completed ✓" : "Mark Complete"}
-                </button>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {subject.papers.map((paper) => (
+                    <span
+                      key={paper}
+                      className="rounded-md bg-primary/10 px-2 py-1 text-xs"
+                    >
+                      {paper}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
-
-            {tasks.length === 0 && (
-              <div className="rounded-2xl border border-dashed p-12 text-center">
-                <h3 className="text-lg font-semibold">
-                  No tasks planned
-                </h3>
-
-                <p className="mt-2 text-muted-foreground">
-                  Add your first study session.
-                </p>
-              </div>
-            )}
           </div>
         </PageContainer>
       </main>

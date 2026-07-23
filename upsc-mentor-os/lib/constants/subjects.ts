@@ -1,4 +1,4 @@
-export type SubjectId = string;
+
 export const UPSC_SUBJECTS = [
   // Essay
   {

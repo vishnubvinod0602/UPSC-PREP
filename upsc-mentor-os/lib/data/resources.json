@@ -324,8 +324,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "ancient-history-ncert-6",
     "subjectId": "ancient-history",
@@ -443,9 +443,7 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-]
-[
+  },
   {
     "id": "medieval-history-ncert-7",
     "subjectId": "medieval-history",
@@ -575,10 +573,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-]
-[
-  {
+  },
+{
     "id": "art-culture-ncert-11",
     "subjectId": "art-culture",
     "category": "NCERT",
@@ -765,9 +761,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-]
-[
+  },
+
   {
     "id": "indian-geography-ncert-6",
     "subjectId": "indian-geography",
@@ -988,8 +983,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "world-geography-ncert-11-fundamentals",
     "subjectId": "world-geography",
@@ -1180,8 +1175,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "society-ncert-11",
     "subjectId": "society",
@@ -1396,8 +1391,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "governance-2nd-arc",
     "subjectId": "governance",
@@ -1579,9 +1574,7 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-]
-[
+  },
   {
     "id": "ir-mea",
     "subjectId": "international-relations",
@@ -1775,9 +1768,7 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-]
-[
+  },
   {
     "id": "economy-ncert-11-indian-economic-development",
     "subjectId": "economy",
@@ -2015,9 +2006,7 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-]
-[
+  },
   {
     "id": "agriculture-ncert-8-resource-development",
     "subjectId": "agriculture",
@@ -2225,10 +2214,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-]
-[
-  {
+  },
+{
     "id": "environment-shankar-ias",
     "subjectId": "environment",
     "category": "Textbook",
@@ -2473,8 +2460,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "science-ncert-6-10",
     "subjectId": "science-technology",
@@ -2721,8 +2708,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "disaster-ndma",
     "subjectId": "disaster-management",
@@ -2904,8 +2891,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "internal-security-mha",
     "subjectId": "internal-security",
@@ -3147,8 +3134,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "ethics-lexicon",
     "subjectId": "ethics",
@@ -3345,8 +3332,8 @@
     "url": "",
     "tags": ["PYQ"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "essay-upsc-syllabus",
     "subjectId": "essay",
@@ -3588,8 +3575,8 @@
     "url": "",
     "tags": ["Mind Maps", "Practice"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "psir1-upsc-syllabus",
     "subjectId": "psir-paper-1",
@@ -3952,8 +3939,8 @@
     "url": "",
     "tags": ["PSIR", "Optional"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "psir2-upsc-syllabus",
     "subjectId": "psir-paper-2",
@@ -4309,8 +4296,8 @@
     "url": "",
     "tags": ["IR"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "ca-upsc-pyq",
     "subjectId": "current-affairs",
@@ -4616,9 +4603,8 @@
     "url": "",
     "tags": ["Revision"],
     "active": true
-  }
-]
-[
+  },
+
   {
     "id": "csat-upsc-syllabus",
     "subjectId": "csat",
@@ -4866,8 +4852,8 @@
     "url": "",
     "tags": ["Formulae", "Shortcuts"],
     "active": true
-  }
-][
+  },
+
   {
     "id": "interview-upsc-process",
     "subjectId": "interview",
