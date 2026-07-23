@@ -1,4 +1,4 @@
-import resources from "./json/resources.json";
+import resources from "./resources.json";
 
 import type { SubjectId } from "../constants";
 import type {

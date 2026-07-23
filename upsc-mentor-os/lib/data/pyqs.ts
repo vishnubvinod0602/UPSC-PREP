@@ -1,4 +1,4 @@
-import pyqs from "./json/pyqs.json";
+import pyqs from "./pyqs.json";
 
 import type { SubjectId } from "../constants";
 import type {
@@ -13,11 +13,25 @@ export interface PYQ {
 
   year: number;
 
+  exam: string;
+
   paper: ExamStage;
+
+  questionNumber: number;
+
+  type: string;
 
   question: string;
 
+  options?: string[];
+
+  correctAnswer?: string;
+
+  explanation?: string;
+
   marks: number;
+
+  negativeMarks?: number;
 
   topic: string;
 
@@ -25,10 +39,20 @@ export interface PYQ {
 
   difficulty: Difficulty;
 
+  source?: string;
+
+  tags?: string[];
+
+  linkedResources?: string[];
+
+  linkedCurrentAffairs?: string[];
+
+  aiHints?: string[];
+
   active: boolean;
 }
 
-const PYQS = pyqs as PYQ[];
+const PYQS: PYQ[] = pyqs as PYQ[];
 
 /**
  * Get all active PYQs.

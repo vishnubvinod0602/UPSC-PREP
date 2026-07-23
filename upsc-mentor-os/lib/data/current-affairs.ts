@@ -1,4 +1,5 @@
-import currentAffairs from "./json/current-affairs.json";
+import currentAffairs from "./current-affairs.json";
+
 
 import type { SubjectId } from "../constants";
 import type { Priority } from "./types";

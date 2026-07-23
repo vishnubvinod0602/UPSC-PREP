@@ -1,17 +1,14 @@
-// Core
-export * from "./core";
+// Subjects
+export * from "./subjects";
 
-// Data
-export * from "./data";
+// Categories
+export * from "./categories";
 
-// Services
-export * from "./services";
+// Difficulty
+export * from "./difficulty";
 
-// Syllabus
-export * from "./syllabus";
+// Priorities
+export * from "./priorities";
 
-// Constants
-export * from "./constants";
-
-// Utils
-export * from "./utils";
+// Settings
+export * from "./settings";

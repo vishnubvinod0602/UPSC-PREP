@@ -1,8 +1,6 @@
-import type { SubjectId } from "../constants";
+import type { SubjectId } from "../types";
 
-import {
-  getSubjects,
-} from "../data/subjects";
+import { getSubjects } from "../data/subjects";
 
 import {
   calculateSubjectProgress,
@@ -11,15 +9,10 @@ import {
 
 export interface AnalyticsSummary {
   totalSubjects: number;
-
   completedSubjects: number;
-
   averageProgress: number;
-
   totalStudyHours: number;
-
   completedStudyHours: number;
-
   remainingStudyHours: number;
 }
 
@@ -31,34 +24,26 @@ export function getAnalytics(
 ): AnalyticsSummary {
   const subjects = getSubjects();
 
-  const completedSubjects =
-    progress.filter(
-      item =>
-        calculateSubjectProgress(item) >= 100,
-    ).length;
+  const completedSubjects = progress.filter(
+    (item) => calculateSubjectProgress(item) >= 100,
+  ).length;
 
-  const totalStudyHours =
-    progress.reduce(
-      (sum, item) =>
-        sum + item.totalHours,
-      0,
-    );
+  const totalStudyHours = progress.reduce(
+    (sum, item) => sum + item.totalHours,
+    0,
+  );
 
-  const completedStudyHours =
-    progress.reduce(
-      (sum, item) =>
-        sum + item.completedHours,
-      0,
-    );
+  const completedStudyHours = progress.reduce(
+    (sum, item) => sum + item.completedHours,
+    0,
+  );
 
   const averageProgress =
     progress.length === 0
       ? 0
       : Math.round(
           progress.reduce(
-            (sum, item) =>
-              sum +
-              calculateSubjectProgress(item),
+            (sum, item) => sum + calculateSubjectProgress(item),
             0,
           ) / progress.length,
         );
@@ -70,8 +55,7 @@ export function getAnalytics(
     totalStudyHours,
     completedStudyHours,
     remainingStudyHours:
-      totalStudyHours -
-      completedStudyHours,
+      totalStudyHours - completedStudyHours,
   };
 }
 
@@ -81,7 +65,7 @@ export function getAnalytics(
 export function getTopSubjects(
   progress: SubjectProgress[],
   limit = 5,
-) {
+): SubjectProgress[] {
   return [...progress]
     .sort(
       (a, b) =>
@@ -97,7 +81,7 @@ export function getTopSubjects(
 export function getBottomSubjects(
   progress: SubjectProgress[],
   limit = 5,
-) {
+): SubjectProgress[] {
   return [...progress]
     .sort(
       (a, b) =>
@@ -115,8 +99,7 @@ export function getSubjectAnalytics(
   subjectId: SubjectId,
 ) {
   const subject = progress.find(
-    item =>
-      item.subjectId === subjectId,
+    (item) => item.subjectId === subjectId,
   );
 
   if (!subject) {
@@ -142,8 +125,7 @@ export function getCompletedHours(
   progress: SubjectProgress[],
 ): number {
   return progress.reduce(
-    (sum, item) =>
-      sum + item.completedHours,
+    (sum, item) => sum + item.completedHours,
     0,
   );
 }
@@ -156,9 +138,7 @@ export function getRemainingHours(
 ): number {
   return progress.reduce(
     (sum, item) =>
-      sum +
-      (item.totalHours -
-        item.completedHours),
+      sum + (item.totalHours - item.completedHours),
     0,
   );
 }
@@ -169,23 +149,18 @@ export function getRemainingHours(
 export function getCompletionPercentage(
   progress: SubjectProgress[],
 ): number {
-  const total =
-    progress.reduce(
-      (sum, item) =>
-        sum + item.totalHours,
-      0,
-    );
+  const total = progress.reduce(
+    (sum, item) => sum + item.totalHours,
+    0,
+  );
 
   if (total === 0) {
     return 0;
   }
 
-  const completed =
-    getCompletedHours(progress);
+  const completed = getCompletedHours(progress);
 
-  return Math.round(
-    (completed / total) * 100,
-  );
+  return Math.round((completed / total) * 100);
 }
 
 /**
@@ -197,9 +172,7 @@ export function getDashboardAnalytics(
   return {
     analytics: getAnalytics(progress),
     topSubjects: getTopSubjects(progress),
-    bottomSubjects:
-      getBottomSubjects(progress),
-    completion:
-      getCompletionPercentage(progress),
+    bottomSubjects: getBottomSubjects(progress),
+    completion: getCompletionPercentage(progress),
   };
 }
