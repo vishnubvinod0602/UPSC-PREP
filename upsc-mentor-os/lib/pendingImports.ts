@@ -1,9 +1,13 @@
-export async function createPendingImport(chatId: string): Promise<string>;
+export async function createPendingImport(chatId: string): Promise<string> {
+  throw new Error("Not implemented");
+}
 
 export async function savePendingSchedule(
   importId: string,
   schedule: ScheduleEntry[]
-): Promise<void>;
+): Promise<void> {
+  throw new Error("Not implemented");
+}
 
 export async function getPendingImport(
   chatId: string
