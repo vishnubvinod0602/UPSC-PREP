@@ -20,7 +20,21 @@ const editingTask = usePlannerStore((state) => state.editingTask);
 const setEditingTask = usePlannerStore((state) => state.setEditingTask);
 
 const subjects = useSubjectStore((state) => state.subjects);
-const resources = useResourceStore((state) => state.resources);
+const loadSubjects = useSubjectStore(
+  (state) => state.loadSubjects
+);
+
+const resources = useResourceStore(
+  (state) => state.resources
+);
+
+const loadResources = useResourceStore(
+  (state) => state.loadResources
+);
+useEffect(() => {
+  loadSubjects();
+  loadResources();
+}, [loadSubjects, loadResources]);
 
 const [subjectId, setSubjectId] = useState("");
 const [resourceId, setResourceId] = useState("");
