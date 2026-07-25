@@ -6,18 +6,35 @@ export async function POST(req: NextRequest) {
 
     const update = await req.json();
 
-    console.log("Telegram Update:");
-    console.log(JSON.stringify(update, null, 2));
+    const message = update.message;
+
+    if (!message) {
+      return NextResponse.json({ ok: true });
+    }
+
+    // Text message
+    if (message.text) {
+      console.log("Text:", message.text);
+    }
+
+    // Photo
+    if (message.photo) {
+      console.log("Photo received");
+      console.log(message.photo);
+    }
+
+    // PDF / Document
+    if (message.document) {
+      console.log("Document received");
+      console.log(message.document);
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Webhook error:", error);
+    console.error(error);
 
     return NextResponse.json(
-      {
-        ok: false,
-        error: "Webhook processing failed",
-      },
+      { ok: false },
       { status: 500 }
     );
   }
