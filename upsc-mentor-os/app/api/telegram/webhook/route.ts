@@ -3,6 +3,7 @@ import {
   getTelegramFile,
   downloadTelegramFile,
 } from "@/lib/telegram";
+import { extractSchedule } from "@/lib/ai/extractSchedule";
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,6 +32,14 @@ export async function POST(req: NextRequest) {
       console.log("File path:", file.file_path);
 
       const imageBuffer = await downloadTelegramFile(file.file_path);
+      
+
+const schedule = await extractSchedule(
+  Buffer.from(imageBuffer),
+  "image/jpeg"
+);
+
+console.log(schedule);
 
       console.log("Downloaded bytes:", imageBuffer.byteLength);
     }
