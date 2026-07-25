@@ -1,36 +1,83 @@
 import { create } from "zustand";
 import type { Resource } from "@/lib/types/resource";
-import { DEFAULT_RESOURCES } from "@/lib/constants/resources";
+import {
+  fetchSheet,
+  addRow,
+  updateRow,
+  deleteRow,
+} from "@/lib/googleSheets/client";
 
 interface ResourceStore {
   resources: Resource[];
+  loading: boolean;
 
-  addResource: (resource: Resource) => void;
-  updateResource: (id: string, updates: Partial<Resource>) => void;
-  deleteResource: (id: string) => void;
+  loadResources: (
+    subjectId?: string,
+    search?: string
+  ) => Promise<void>;
+
+  addResource: (resource: Resource) => Promise<void>;
+
+  updateResource: (
+    id: string,
+    updates: Partial<Resource>
+  ) => Promise<void>;
+
+  deleteResource: (id: string) => Promise<void>;
 }
 
-export const useResourceStore = create<ResourceStore>((set) => ({
-  resources: DEFAULT_RESOURCES as Resource[],
+export const useResourceStore = create<ResourceStore>((set, get) => ({
+  resources: [],
+  loading: false,
 
-  addResource: (resource) =>
-    set((state) => ({
-      resources: [...state.resources, resource],
-    })),
+  loadResources: async (
+    subjectId?: string,
+    search?: string
+  ) => {
+    set({ loading: true });
 
-  updateResource: (id, updates) =>
-    set((state) => ({
-      resources: state.resources.map((resource) =>
-        resource.id === id
-          ? { ...resource, ...updates }
-          : resource
-      ),
-    })),
+    try {
+      const resources = await fetchSheet<Resource>(
+        "Resources",
+        {
+          ...(subjectId ? { subjectId } : {}),
+          ...(search ? { search } : {}),
+        }
+      );
 
-  deleteResource: (id) =>
-    set((state) => ({
-      resources: state.resources.filter(
-        (resource) => resource.id !== id
-      ),
-    })),
+      set({
+        resources,
+        loading: false,
+      });
+    } catch (error) {
+      console.error(error);
+
+      set({
+        loading: false,
+      });
+    }
+  },
+
+  addResource: async (resource) => {
+    await addRow("Resources", resource);
+    await get().loadResources(resource.subjectId);
+  },
+
+  updateResource: async (id, updates) => {
+    await updateRow("Resources", id, updates);
+
+    const subjectId =
+      get().resources.find((r) => r.id === id)?.subjectId;
+
+    await get().loadResources(subjectId);
+  },
+
+  deleteResource: async (id) => {
+    const subjectId =
+      get().resources.find((r) => r.id === id)?.subjectId;
+
+    await deleteRow("Resources", id);
+
+    await get().loadResources(subjectId);
+  },
 }));

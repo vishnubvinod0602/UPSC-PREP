@@ -1,5 +1,6 @@
 "use client";
-
+import { useEffect } from "react";
+import { useSubjectStore } from "@/store/subjects";
 import { Clock3, BookOpen, Target, Trophy } from "lucide-react";
 
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -16,6 +17,12 @@ import { TodayPlanner } from "@/features/dashboard/TodayPlanner";
 import { CountdownCard } from "@/features/dashboard/CountdownCard";
 
 export default function HomePage() {
+
+  const loadSubjects = useSubjectStore((state) => state.loadSubjects);
+  const subjects = useSubjectStore((state) => state.subjects);
+  useEffect(() => {
+  loadSubjects();
+}, [loadSubjects]);
   const {
     studyHours,
     revisionDue,
@@ -72,7 +79,9 @@ export default function HomePage() {
   <TodayPlanner />
   <CountdownCard />
 </div>
-
+<pre className="mt-6 rounded bg-gray-100 p-4 text-xs overflow-auto">
+  {JSON.stringify(subjects, null, 2)}
+</pre>
         </PageContainer>
       </main>
     </div>

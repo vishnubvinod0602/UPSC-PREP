@@ -1,32 +1,63 @@
 import { create } from "zustand";
 import { Subject } from "@/lib/types/subject";
-import { DEFAULT_SUBJECTS } from "@/lib/constants/subjects";
+import {
+  fetchSheet,
+  addRow,
+  updateRow,
+  deleteRow,
+} from "@/lib/googleSheets/client";
 
 interface SubjectStore {
   subjects: Subject[];
+  loading: boolean;
 
-  addSubject: (subject: Subject) => void;
-  updateSubject: (id: string, updates: Partial<Subject>) => void;
-  deleteSubject: (id: string) => void;
+  loadSubjects: () => Promise<void>;
+
+  addSubject: (subject: Subject) => Promise<void>;
+
+  updateSubject: (
+    id: string,
+    updates: Partial<Subject>
+  ) => Promise<void>;
+
+  deleteSubject: (id: string) => Promise<void>;
 }
 
-export const useSubjectStore = create<SubjectStore>((set) => ({
-  subjects: [...DEFAULT_SUBJECTS],
+export const useSubjectStore = create<SubjectStore>((set, get) => ({
+  subjects: [],
+  loading: false,
 
-  addSubject: (subject) =>
-    set((state) => ({
-      subjects: [...state.subjects, subject],
-    })),
+  loadSubjects: async () => {
+    set({ loading: true });
 
-  updateSubject: (id, updates) =>
-    set((state) => ({
-      subjects: state.subjects.map((s) =>
-        s.id === id ? { ...s, ...updates } : s
-      ),
-    })),
+    try {
+      const subjects = await fetchSheet<Subject>("Subjects");
 
-  deleteSubject: (id) =>
-    set((state) => ({
-      subjects: state.subjects.filter((s) => s.id !== id),
-    })),
+      set({
+        subjects,
+        loading: false,
+      });
+    } catch (error) {
+      console.error(error);
+
+      set({
+        loading: false,
+      });
+    }
+  },
+
+  addSubject: async (subject) => {
+    await addRow("Subjects", subject);
+    await get().loadSubjects();
+  },
+
+  updateSubject: async (id, updates) => {
+    await updateRow("Subjects", id, updates);
+    await get().loadSubjects();
+  },
+
+  deleteSubject: async (id) => {
+    await deleteRow("Subjects", id);
+    await get().loadSubjects();
+  },
 }));

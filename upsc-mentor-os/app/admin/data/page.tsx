@@ -5,25 +5,34 @@ import { PageTitle } from "@/components/common/PageTitle";
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { useSubjectStore } from "@/store/subjects";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddSubjectDialog from "@/components/admin/AddSubjectDialog";
 import AddResourceDialog from "@/components/admin/AddResourceDialog";
 import { useResourceStore } from "@/store/resources";
 import type { Resource } from "@/lib/types/resource";
 import type { Subject } from "@/lib/types/subject";
-
+import { importDatabase } from "@/lib/googleSheets/importDatabase";
 
 export default function DataManagementPage() {
-  const { subjects, deleteSubject } = useSubjectStore();
+  const [importing, setImporting] = useState(false);
+  const {
+  subjects,
+  deleteSubject,
+  loadSubjects,
+} = useSubjectStore();
   const [open, setOpen] = useState(false);
   const [resourceOpen, setResourceOpen] = useState(false);
-  const { resources, deleteResource } = useResourceStore();
+  const {
+  resources,
+  deleteResource,
+  loadResources,
+} = useResourceStore();
   const [subjectSearch, setSubjectSearch] = useState("");
   const [subjectPaperFilters, setSubjectPaperFilters] = useState<string[]>([]);
 const [resourceSearch, setResourceSearch] = useState("");
-const [resourceSubjectFilter, setResourceSubjectFilter] = useState("all");
 const [resourceCategoryFilter, setResourceCategoryFilter] = useState("all");
 const [resourcePriorityFilter, setResourcePriorityFilter] = useState("all");
+const [resourceSubjectFilter, setResourceSubjectFilter] = useState("");
 
 const [subjectFilter, setSubjectFilter] = useState<
   "all" | "active" | "inactive"
@@ -50,6 +59,37 @@ const PAPERS = [
   useState<Subject | null>(null);
   const [editingResource, setEditingResource] =
   useState<Resource | null>(null);
+  const handleImportDatabase = async () => {
+  setImporting(true);
+
+  try {
+    const result = await importDatabase();
+
+    if (result.success) {
+      alert("Database imported successfully!");
+    } else {
+      alert("Import failed.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong while importing.");
+  } finally {
+    setImporting(false);
+  }
+};
+useEffect(() => {
+  loadSubjects();
+}, [loadSubjects]);
+
+useEffect(() => {
+  if (resourceSubjectFilter) {
+    loadResources(resourceSubjectFilter, resourceSearch);
+  }
+}, [
+  resourceSubjectFilter,
+  resourceSearch,
+  loadResources,
+]);
     return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
@@ -116,6 +156,13 @@ const PAPERS = [
     >
       + Add Subject
     </button>
+    <button
+  onClick={handleImportDatabase}
+  disabled={importing}
+  className="rounded-lg border px-4 py-2"
+>
+  {importing ? "Importing..." : "Import Database"}
+</button>
   </div>
 </div>
 
@@ -198,7 +245,7 @@ const PAPERS = [
   onChange={(e) => setResourceSubjectFilter(e.target.value)}
   className="rounded-lg border px-3 py-2"
 >
-  <option value="all">All Subjects</option>
+  <option value="">Select Subjects</option>
 
   {subjects.map((subject) => (
     <option key={subject.id} value={subject.id}>
