@@ -133,7 +133,7 @@ export function getCompletedHours(
 /**
  * Total remaining hours.
  */
-export function getRemainingHours(
+export function getTotalRemainingHours(
   progress: SubjectProgress[],
 ): number {
   return progress.reduce(
