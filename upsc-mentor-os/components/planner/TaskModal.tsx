@@ -1,65 +1,72 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { usePlannerStore } from "@/store/planner";
 import { useSubjectStore } from "@/store/subjects";
 import { useResourceStore } from "@/store/resources";
 import { generateRevisionTasks } from "@/lib/revisionSchedule";
-import { useEffect, useState } from "react";
+
 type TaskModalProps = {
   open: boolean;
   onClose: () => void;
 };
 
-export function TaskModal({
-  open,
-  onClose,
-}: TaskModalProps) {
- const addTask = usePlannerStore((state) => state.addTask);
-const updateTask = usePlannerStore((state) => state.updateTask);
-const editingTask = usePlannerStore((state) => state.editingTask);
-const setEditingTask = usePlannerStore((state) => state.setEditingTask);
+export function TaskModal({ open, onClose }: TaskModalProps) {
+  // Planner Store
+  const addTask = usePlannerStore((state) => state.addTask);
+  const updateTask = usePlannerStore((state) => state.updateTask);
+  const editingTask = usePlannerStore((state) => state.editingTask);
+  const setEditingTask = usePlannerStore((state) => state.setEditingTask);
 
-const subjects = useSubjectStore((state) => state.subjects);
-const loadSubjects = useSubjectStore(
-  (state) => state.loadSubjects
-);
+  // Subject Store
+  const subjects = useSubjectStore((state) => state.subjects);
+  const loadSubjects = useSubjectStore((state) => state.loadSubjects);
 
-const resources = useResourceStore(
-  (state) => state.resources
-);
+  // Resource Store
+  const resources = useResourceStore((state) => state.resources);
+  const loadResources = useResourceStore((state) => state.loadResources);
 
-const loadResources = useResourceStore(
-  (state) => state.loadResources
-);
-useEffect(() => {
-  loadSubjects();
-  loadResources();
-}, [loadSubjects, loadResources]);
-
-const [subjectId, setSubjectId] = useState("");
-const [resourceId, setResourceId] = useState("");
-const [goal, setGoal] = useState("");
-const [date, setDate] = useState(
-  new Date().toISOString().split("T")[0]
-);
-const [start, setStart] = useState("07:00");
-const [end, setEnd] = useState("09:00");
-const [targetHours, setTargetHours] = useState(2);
+  // Local State
+  const [subjectId, setSubjectId] = useState("");
+  const [resourceId, setResourceId] = useState("");
+  const [goal, setGoal] = useState("");
+  const [date, setDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [start, setStart] = useState("07:00");
+  const [end, setEnd] = useState("09:00");
+  const [targetHours, setTargetHours] = useState(2);
 const [priority, setPriority] = useState<
   "Low" | "Medium" | "High"
 >("High");
 
-const subjectResources = resources.filter(
-  (r) => r.subjectId === subjectId
-);
+  // Load subjects once
+  useEffect(() => {
+    loadSubjects();
+  }, [loadSubjects]);
 
-const selectedSubject = subjects.find(
-  (s) => s.id === subjectId
-);
+  // Load resources whenever subject changes
+  useEffect(() => {
+    if (subjectId) {
+      loadResources(subjectId);
+    }
+  }, [subjectId, loadResources]);
 
-const selectedResource = resources.find(
-  (r) => r.id === resourceId
-);
+  // Debug
+  useEffect(() => {
+    console.log("Subjects:", subjects);
+    console.log("Resources:", resources);
+  }, [subjects, resources]);
+
+  const subjectResources = resources;
+
+  const selectedSubject = subjects.find(
+    (s) => s.id === subjectId
+  );
+
+  const selectedResource = resources.find(
+    (r) => r.id === resourceId
+  );
 useEffect(() => {
   console.log("Editing Task:", editingTask);
 }, [editingTask]);
