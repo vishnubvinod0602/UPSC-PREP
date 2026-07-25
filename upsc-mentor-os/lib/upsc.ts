@@ -1,87 +1,32 @@
-import { create } from "zustand";
+export const EXAMS = [
+  "Prelims",
+  "Mains",
+  "Interview",
+] as const;
 
-export interface PlannerTask {
-  id: string;
-  title: string;
+export const PAPERS = [
+  "GS I",
+  "GS II",
+  "GS III",
+  "GS IV",
+  "Essay",
+  "PSIR Paper I",
+  "PSIR Paper II",
+] as const;
 
-  subject:
-  exam: "Prelims" | "Mains";
+export const ACTIVITIES = [
+  "Study",
+  "Revision",
+  "MCQ Practice",
+  "PYQ Practice",
+  "Answer Writing",
+  "Test",
+  "Class",
+  "Notes Making",
+] as const;
 
-subject: string;
-
-activity:
-  | "Study"
-  | "Revision"
-  | "MCQ Practice"
-  | "PYQ Practice"
-  | "Answer Writing"
-  | "Test"
-  | "Class"
-  | "Notes Making";
-
-  priority: "Low" | "Medium" | "High";
-
-  start: string;
-  end: string;
-
-  completed: boolean;
-
-  date: string;
-}
-
-interface PlannerState {
-  tasks: PlannerTask[];
-
-  addTask: (task: PlannerTask) => void;
-
-  toggleTask: (id: string) => void;
-}
-
-export const usePlannerStore = create<PlannerState>((set) => ({
-  tasks: [
-    {
-      id: "1",
-      title: "GS Paper II",
-      subject: "GS2",
-      priority: "High",
-      start: "07:00",
-      end: "09:00",
-      completed: false,
-      date: "2026-07-23",
-    },
-    {
-      id: "2",
-      title: "PSIR Revision",
-      subject: "PSIR",
-      priority: "Medium",
-      start: "10:00",
-      end: "11:30",
-      completed: false,
-      date: "2026-07-23",
-    },
-    {
-      id: "3",
-      title: "MCQ Practice",
-      subject: "Revision",
-      priority: "High",
-      start: "16:00",
-      end: "17:00",
-      completed: false,
-      date: "2026-07-23",
-    },
-  ],
-
-  addTask: (task) =>
-    set((state) => ({
-      tasks: [...state.tasks, task],
-    })),
-
-  toggleTask: (id) =>
-    set((state) => ({
-      tasks: state.tasks.map((task) =>
-        task.id === id
-          ? { ...task, completed: !task.completed }
-          : task
-      ),
-    })),
-}));
+export const PRIORITIES = [
+  "Low",
+  "Medium",
+  "High",
+] as const;
