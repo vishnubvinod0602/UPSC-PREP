@@ -54,9 +54,9 @@ export function getNextRevisionDay(
 export function isRevisionDue(
   completedDays: number,
 ): boolean {
-  return UPSC_SETTINGS.revisionIntervals.includes(
-    completedDays,
-  );
+  return (UPSC_SETTINGS.revisionIntervals as readonly number[]).includes(
+  completedDays,
+);
 }
 
 /**
