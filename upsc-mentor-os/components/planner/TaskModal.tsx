@@ -69,7 +69,7 @@ function handleSave() {
 
   const task = {
     id: crypto.randomUUID(),
-    title: goal || selectedResource.name,
+    title: goal || selectedResource?.name || "Untitled Task",
     exam: selectedSubject.papers.includes("Prelims")
       ? "Prelims"
       : "Mains",
