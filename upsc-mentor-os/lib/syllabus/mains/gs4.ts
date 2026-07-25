@@ -53,5 +53,5 @@ export const GS4_SYLLABUS = {
         "Compassion",
       ],
     },
-
-    
+  ],
+} as const;
