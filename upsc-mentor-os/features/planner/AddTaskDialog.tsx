@@ -58,7 +58,9 @@ const [date, setDate] = useState("");
 
     <Select
   value={subject}
-  onValueChange={setSubject}
+  onValueChange={(value) => {
+    setSubject(value ?? "");
+  }}
 >
       <SelectTrigger>
         <SelectValue placeholder="Select subject" />
@@ -83,7 +85,9 @@ const [date, setDate] = useState("");
 
     <Select
   value={priority}
-  onValueChange={setPriority}
+  onValueChange={(value) => {
+    setPriority(value ?? "Medium");
+  }}
 >
       <SelectTrigger>
         <SelectValue placeholder="Select priority" />
