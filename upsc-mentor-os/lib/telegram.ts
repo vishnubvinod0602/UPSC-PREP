@@ -1,6 +1,6 @@
 export async function sendTelegramMessage(message: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const chatId = process.env.TELEGRAM_OWNER_ID;
 
   if (!token || !chatId) {
     throw new Error("Telegram environment variables are missing.");
