@@ -1,11 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { sendTelegramMessage } from "@/lib/telegram";
 
-export async function POST(req: NextRequest) {
-  const update = await req.json();
+export async function GET() {
+  try {
+    await sendTelegramMessage(
+      "✅ UPSC Mentor OS is connected successfully!"
+    );
 
-  console.log(JSON.stringify(update, null, 2));
-
-  return NextResponse.json({
-    ok: true,
-  });
+    return NextResponse.json({
+      success: true,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 }
+    );
+  }
 }
