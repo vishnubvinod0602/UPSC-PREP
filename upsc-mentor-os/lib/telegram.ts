@@ -26,3 +26,41 @@ export async function sendTelegramMessage(message: string) {
 
   return response.json();
 }
+
+export async function getTelegramFile(fileId: string) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+
+  if (!token) {
+    throw new Error("Telegram bot token is missing.");
+  }
+
+  const response = await fetch(
+    `https://api.telegram.org/bot${token}/getFile?file_id=${fileId}`
+  );
+
+  const data = await response.json();
+
+  if (!data.ok) {
+    throw new Error("Failed to get Telegram file.");
+  }
+
+  return data.result;
+}
+
+export async function downloadTelegramFile(filePath: string) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+
+  if (!token) {
+    throw new Error("Telegram bot token is missing.");
+  }
+
+  const response = await fetch(
+    `https://api.telegram.org/file/bot${token}/${filePath}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to download Telegram file.");
+  }
+
+  return response.arrayBuffer();
+}
