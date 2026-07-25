@@ -4,7 +4,7 @@ import {
   getTelegramFile,
   sendTelegramMessage,
 } from "@/lib/telegram";
-import { extractSchedule } from "@/lib/extractSchedule";
+import { extractSchedule } from "@/lib/ai/extractSchedule";
 
 export async function POST(req: NextRequest) {
   try {
