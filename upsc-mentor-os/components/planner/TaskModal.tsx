@@ -67,24 +67,27 @@ function handleSave() {
   return;
 }
 
-  const task = {
-    id: crypto.randomUUID(),
-    title: goal || selectedResource?.name || "Untitled Task",
-    exam: selectedSubject.papers.includes("Prelims")
-      ? "Prelims"
-      : "Mains",
-    subject: selectedSubject.name,
-    activity: "Study",
-    priority,
-    start,
-    end,
-    completed: false,
-    date,
-    subjectId,
-    resourceId,
-    goal,
-    targetHours,
-  };
+  const exam: "Prelims" | "Mains" =
+  selectedSubject?.papers?.includes("Prelims")
+    ? "Prelims"
+    : "Mains";
+
+const task = {
+  id: crypto.randomUUID(),
+  title: goal || selectedResource?.name || "Untitled Task",
+  exam,
+  subject: selectedSubject?.name || "",
+  activity: "Study" as const,
+  priority,
+  start,
+  end,
+  completed: false,
+  date,
+  subjectId,
+  resourceId,
+  goal,
+  targetHours,
+};
 
 if (editingTask) {
   updateTask({
