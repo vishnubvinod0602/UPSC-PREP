@@ -1,10 +1,10 @@
 import { clearCache, setCache } from "./cache";
 
-import subjects from "./json/subjects.json";
-import resources from "./json/resources.json";
-import pyqs from "./json/pyqs.json";
-import currentAffairs from "./json/current-affairs.json";
-import tests from "./json/tests.json";
+import subjects from "./subjects.json";
+import resources from "./resources.json";
+import pyqs from "./pyqs.json";
+import currentAffairs from "./current-affairs.json";
+import tests from "./tests.json";
 
 export const DATASETS = [
   "subjects",
