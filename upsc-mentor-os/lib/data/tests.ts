@@ -1,4 +1,4 @@
-import tests from "./json/tests.json";
+import tests from "./tests.json";
 
 import type { SubjectId } from "../constants";
 import type { ExamStage } from "./types";
