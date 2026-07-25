@@ -1,4 +1,4 @@
-import subjects from "./json/subjects.json";
+import subjects from "./subjects.json";
 import type { SubjectId } from "../constants";
 
 export interface Subject {
