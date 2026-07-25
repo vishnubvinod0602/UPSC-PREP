@@ -8,7 +8,7 @@ import {
   PSIR_PAPER1_SYLLABUS,
   PSIR_PAPER2_SYLLABUS,
   INTERVIEW_SYLLABUS,
-} from "./syllabus";
+} from "./syllabus/index";
 
 export const UPSC_SYLLABUS = {
   Prelims: PRELIMS_SYLLABUS,
