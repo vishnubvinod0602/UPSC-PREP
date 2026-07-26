@@ -58,3 +58,5 @@ Requirements:
 - Never invent, infer or guess missing information.
 - Return one JSON object for every class found in the timetable.
 `;
+
+

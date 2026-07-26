@@ -32,7 +32,7 @@ export async function extractSchedule(
   if (!text) {
     throw new Error("Gemini returned an empty response.");
   }
-
+console.log(JSON.stringify(scheduler, null ,2));
   const cleanText = text
     .replace(/^```json\s*/i, "")
     .replace(/^```\s*/i, "")
