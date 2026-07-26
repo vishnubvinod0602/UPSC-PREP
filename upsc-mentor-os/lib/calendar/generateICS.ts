@@ -17,21 +17,34 @@ function parseDate(date: string) {
 }
 
 function parseTime(time: string) {
-  const cleaned = time.trim();
-  
-  if (cleaned.includes(":")) {
-    const [hour, minute] = cleaned.split(":").map(Number);
+  const cleaned = time.trim().toUpperCase();
 
-    return {
-      hour,
-      minute,
-    };
+  const match = cleaned.match(
+    /^(\d{1,2}):(\d{2})\s*(AM|PM)$/
+  );
+
+  if (match) {
+    let hour = Number(match[1]);
+    const minute = Number(match[2]);
+    const period = match[3];
+
+    if (period === "PM" && hour !== 12) {
+      hour += 12;
+    }
+
+    if (period === "AM" && hour === 12) {
+      hour = 0;
+    }
+
+    return { hour, minute };
   }
 
-  // HH
+  // 24-hour format fallback
+  const [hour, minute] = cleaned.split(":").map(Number);
+
   return {
-    hour: Number(cleaned),
-    minute: 0,
+    hour,
+    minute,
   };
 }
 
