@@ -1,4 +1,4 @@
-import { importRows } from "@/lib/googleSheets/client";
+import { importRows } from "@/lib/googleSheets/server";
 
 export interface ScheduleItem {
   [key: string]: any;
