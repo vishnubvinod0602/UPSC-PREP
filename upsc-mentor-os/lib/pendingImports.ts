@@ -2,14 +2,14 @@ import {
   addRow,
   fetchSheet,
   updateRow,
-  
 } from "@/lib/googleSheets/server";
 
 import type { PendingImport } from "@/lib/types/pendingImport";
+import type { ScheduleEvent } from "@/types/schedule";
 
 export async function savePendingImport(
   chatId: string,
-  schedule: unknown[]
+  schedule: ScheduleEvent[]
 ) {
   await addRow("PendingImports", {
     id: crypto.randomUUID(),
@@ -23,14 +23,13 @@ export async function savePendingImport(
 export async function getLatestPendingImport(
   chatId: string
 ) {
-  const imports =
-    await fetchSheet<PendingImport>(
-      "PendingImports",
-      {
-        chatId,
-        status: "pending",
-      }
-    );
+  const imports = await fetchSheet<PendingImport>(
+    "PendingImports",
+    {
+      chatId,
+      status: "pending",
+    }
+  );
 
   return imports[0] ?? null;
 }
@@ -38,23 +37,15 @@ export async function getLatestPendingImport(
 export async function markImported(
   id: string
 ) {
-  await updateRow(
-    "PendingImports",
-    id,
-    {
-      status: "imported",
-    }
-  );
+  await updateRow("PendingImports", id, {
+    status: "imported",
+  });
 }
 
 export async function markCancelled(
   id: string
 ) {
-  await updateRow(
-    "PendingImports",
-    id,
-    {
-      status: "cancelled",
-    }
-  );
+  await updateRow("PendingImports", id, {
+    status: "cancelled",
+  });
 }

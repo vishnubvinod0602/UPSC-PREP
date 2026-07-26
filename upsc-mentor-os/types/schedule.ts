@@ -1,17 +1,32 @@
-export interface ScheduleItem {
-  id?: string;
+// types/schedule.ts
 
-  date: string;
-
-  startTime: string;
-
-  endTime: string;
-
+export interface ScheduleEvent {
+  /** Subject or class name */
   subject: string;
 
-  faculty?: string;
+  /** Faculty name */
+  faculty: string;
 
-  venue?: string;
+  /** Venue / classroom */
+  venue: string;
 
-  mode?: string;
+  /** Online / Offline / Hybrid */
+  mode: string;
+
+  /** Source timetable timezone */
+  timezone: "Asia/Kolkata";
+
+  /** Original coaching start time */
+  startLocal: string;
+
+  /** Original coaching end time */
+  endLocal: string;
+
+  /** UTC start time */
+  startUtc: string;
+
+  /** UTC end time */
+  endUtc: string;
 }
+
+export type Schedule = ScheduleEvent[];

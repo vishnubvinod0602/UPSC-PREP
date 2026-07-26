@@ -1,19 +1,17 @@
 import { ai } from "./gemini";
 import { SCHEDULE_PROMPT } from "./prompts";
-import type { ScheduleEntry } from "./types";
-import { ScheduleItem } from "@/types/schedule";
+import type { ScheduleEvent } from "@/types/schedule";
 
 export async function extractSchedule(
   image: Buffer,
   mimeType: string
-): Promise<ScheduleEntry[]> {
+): Promise<ScheduleEvent[]> {
   const response = await ai.models.generateContent({
-    model: "gemini-3.5-flash",
+    model: "gemini-2.5-flash",
 
     contents: [
       {
         role: "user",
-
         parts: [
           {
             inlineData: {
@@ -35,9 +33,21 @@ export async function extractSchedule(
     throw new Error("Gemini returned an empty response.");
   }
 
+  const cleanText = text
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/```$/i, "")
+    .trim();
+
   try {
-    return JSON.parse(text) as ScheduleEntry[];
-  } catch {
-    throw new Error("Gemini returned invalid JSON.");
+    return JSON.parse(cleanText) as ScheduleEvent[];
+  } catch (error) {
+    console.error("Invalid Gemini response:", cleanText);
+
+    throw new Error(
+      `Gemini returned invalid JSON: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
   }
 }
