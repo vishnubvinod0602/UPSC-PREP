@@ -5,6 +5,13 @@ import {
   sendTelegramMessage,
 } from "@/lib/telegram";
 import { extractSchedule } from "@/lib/ai/extractSchedule";
+import { 
+  savePendingImport,
+  getLatestPendingImport,
+  markImported,
+  markCancelled,
+   } from "@/lib/pendingImports";
+import { importSchedule } from "@/lib/importSchedule";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,15 +25,55 @@ export async function POST(req: NextRequest) {
     }
 
     // Text messages
-    if (message.text) {
-      console.log("Text:", message.text);
+    // Text messages
+if (message.text) {
+  const text = message.text.trim().toUpperCase();
+  const chatId = String(message.chat.id);
 
+  if (text === "YES") {
+    const pending = await getLatestPendingImport(chatId);
+
+    if (!pending) {
       await sendTelegramMessage(
-        "📷 Send me a coaching timetable image and I'll extract the schedule."
+        "❌ No pending schedule found."
       );
 
       return NextResponse.json({ ok: true });
     }
+
+    const schedule = JSON.parse(pending.schedule);
+
+    await importSchedule(schedule);
+
+    await markImported(pending.id);
+
+    await sendTelegramMessage(
+      `✅ Schedule imported successfully.\n\n${schedule.length} classes have been added.`
+    );
+
+    return NextResponse.json({ ok: true });
+  }
+
+  if (text === "NO") {
+    const pending = await getLatestPendingImport(chatId);
+
+    if (pending) {
+      await markCancelled(pending.id);
+    }
+
+    await sendTelegramMessage(
+      "❌ Schedule import cancelled."
+    );
+
+    return NextResponse.json({ ok: true });
+  }
+
+  await sendTelegramMessage(
+    "📷 Send me a coaching timetable image and I'll extract the schedule."
+  );
+
+  return NextResponse.json({ ok: true });
+}
 
     // Photo messages
     const largestPhoto = message.photo?.at(-1);
@@ -123,11 +170,11 @@ YES ✅  Save Schedule
 
 NO ❌  Cancel Import`;
 
-      // TODO:
-      // Store 'schedule' temporarily (Redis/database)
-      // using the Telegram chat ID so that
-      // YES can save it later.
 
+      await savePendingImport(
+  String(message.chat.id),
+  schedule
+);
       await sendTelegramMessage(summary);
     }
 

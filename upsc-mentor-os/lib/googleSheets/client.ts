@@ -1,3 +1,4 @@
+
 const BASE_URL = "/api/sheets";
 
 export async function fetchSheet<T>(
@@ -71,7 +72,8 @@ export function deleteRow(
   });
 }
 
-export async function importSheet(
+// New preferred name
+export async function importRows(
   sheet: string,
   data: unknown[]
 ) {
@@ -93,3 +95,6 @@ export async function importSheet(
 
   return await res.json();
 }
+
+// Backward compatibility
+export const importSheet = importRows;
