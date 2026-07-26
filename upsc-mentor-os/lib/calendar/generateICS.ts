@@ -17,9 +17,24 @@ function parseDate(date: string) {
 }
 
 function parseTime(time: string) {
-  const [hour, minute] = time.split(":").map(Number);
-  return { hour, minute };
+  const cleaned = time.trim();
+  
+  if (cleaned.includes(":")) {
+    const [hour, minute] = cleaned.split(":").map(Number);
+
+    return {
+      hour,
+      minute,
+    };
+  }
+
+  // HH
+  return {
+    hour: Number(cleaned),
+    minute: 0,
+  };
 }
+
 
 export async function generateICS(
   schedule: ScheduleItem[]
