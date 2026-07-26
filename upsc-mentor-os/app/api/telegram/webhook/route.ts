@@ -189,9 +189,11 @@ NO ❌  Cancel Import`;
   } catch (error) {
     console.error(error);
 
-    await sendTelegramMessage(
-      '❌ Failed to process timetable\n\n${error instanceof Error ? error.message : String(error)}'
-    );
+   await sendTelegramMessage(
+  `❌ Failed to process timetable
+
+${error instanceof Error ? error.message : String(error)}`
+);
 
     return NextResponse.json(
       {
