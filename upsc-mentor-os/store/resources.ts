@@ -10,6 +10,7 @@ import {
 interface ResourceStore {
   resources: Resource[];
   loading: boolean;
+  error: string | null;
 
   loadResources: (
     subjectId?: string,
@@ -24,20 +25,27 @@ interface ResourceStore {
   ) => Promise<void>;
 
   deleteResource: (id: string) => Promise<void>;
+
+  clearResources: () => void;
 }
 
 export const useResourceStore = create<ResourceStore>((set, get) => ({
   resources: [],
   loading: false,
+  error: null,
 
-  loadResources: async (
-    subjectId?: string,
-    search?: string
-  ) => {
-    set({ loading: true });
+  loadResources: async (subjectId, search) => {
+    set({
+      loading: true,
+      error: null,
+    });
 
     try {
-      const resources = await fetchSheet<Resource>(
+      console.log("Loading Resources...");
+      console.log("Subject ID:", subjectId);
+      console.log("Search:", search);
+
+      const data = await fetchSheet<Resource>(
         "Resources",
         {
           ...(subjectId ? { subjectId } : {}),
@@ -45,39 +53,65 @@ export const useResourceStore = create<ResourceStore>((set, get) => ({
         }
       );
 
-      set({
-        resources,
-        loading: false,
-      });
-    } catch (error) {
-      console.error(error);
+      console.log("Fetched Resources:", data);
 
       set({
+        resources: data,
         loading: false,
+      });
+    } catch (err) {
+      console.error("Failed to load resources:", err);
+
+      set({
+        resources: [],
+        loading: false,
+        error: "Unable to load resources",
       });
     }
   },
 
   addResource: async (resource) => {
-    await addRow("Resources", resource);
-    await get().loadResources(resource.subjectId);
+    try {
+      await addRow("Resources", resource);
+      await get().loadResources(resource.subjectId);
+    } catch (err) {
+      console.error("Add Resource Error:", err);
+    }
   },
 
   updateResource: async (id, updates) => {
-    await updateRow("Resources", id, updates);
+    try {
+      await updateRow("Resources", id, updates);
 
-    const subjectId =
-      get().resources.find((r) => r.id === id)?.subjectId;
+      const resource = get().resources.find(
+        (r) => r.id === id
+      );
 
-    await get().loadResources(subjectId);
+      await get().loadResources(
+        updates.subjectId ?? resource?.subjectId
+      );
+    } catch (err) {
+      console.error("Update Resource Error:", err);
+    }
   },
 
   deleteResource: async (id) => {
-    const subjectId =
-      get().resources.find((r) => r.id === id)?.subjectId;
+    try {
+      const resource = get().resources.find(
+        (r) => r.id === id
+      );
 
-    await deleteRow("Resources", id);
+      await deleteRow("Resources", id);
 
-    await get().loadResources(subjectId);
+      await get().loadResources(resource?.subjectId);
+    } catch (err) {
+      console.error("Delete Resource Error:", err);
+    }
   },
+
+  clearResources: () =>
+    set({
+      resources: [],
+      error: null,
+    }),
 }));
