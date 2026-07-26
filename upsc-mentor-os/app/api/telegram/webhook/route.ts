@@ -12,8 +12,11 @@ import {
   markCancelled,
    } from "@/lib/pendingImports";
 import { importSchedule } from "@/lib/importSchedule";
+import { generateICS } from "@/lib/calendar/generateICS";
+import { sendTelegramDocument } from "@/lib/telegram";
 
 export async function POST(req: NextRequest) {
+  let chatId ="";
   try {
     console.log("Webhook hit");
 
@@ -23,18 +26,19 @@ export async function POST(req: NextRequest) {
     if (!message) {
       return NextResponse.json({ ok: true });
     }
-
+chatId =String(message.chat.id);
     // Text messages
     // Text messages
 if (message.text) {
   const text = message.text.trim().toUpperCase();
-  const chatId = String(message.chat.id);
+  
 
   if (text === "YES") {
     const pending = await getLatestPendingImport(chatId);
 
     if (!pending) {
       await sendTelegramMessage(
+        chatId,
         "❌ No pending schedule found."
       );
 
@@ -43,13 +47,28 @@ if (message.text) {
 
     const schedule = JSON.parse(pending.schedule);
 
-    await importSchedule(schedule);
+    const importedRows = await importSchedule(schedule);
 
-    await markImported(pending.id);
+await markImported(pending.id);
 
-    await sendTelegramMessage(
-      `✅ Schedule imported successfully.\n\n${schedule.length} classes have been added.`
-    );
+const icsFile = await generateICS(importedRows);
+
+await sendTelegramDocument(
+  chatId,
+  icsFile,
+  "UPSC-Schedule.ics"
+);
+
+await sendTelegramMessage(
+  chatId,
+  `✅ Schedule imported successfully.
+
+${importedRows.length} classes have been added.
+
+📅 Your calendar file has been sent.
+
+Open it to import all classes into Google Calendar, Apple Calendar, Outlook, or Samsung Calendar.`
+);
 
     return NextResponse.json({ ok: true });
   }
@@ -62,6 +81,7 @@ if (message.text) {
     }
 
     await sendTelegramMessage(
+      chatId,
       "❌ Schedule import cancelled."
     );
 
@@ -69,6 +89,7 @@ if (message.text) {
   }
 
   await sendTelegramMessage(
+   chatId,
     "📷 Send me a coaching timetable image and I'll extract the schedule."
   );
 
@@ -98,6 +119,7 @@ if (message.text) {
 
       if (schedule.length === 0) {
         await sendTelegramMessage(
+        chatId,
           "❌ I couldn't detect any schedule entries in this image."
         );
 
@@ -175,12 +197,13 @@ NO ❌  Cancel Import`;
   String(message.chat.id),
   schedule
 );
-      await sendTelegramMessage(summary);
+      await sendTelegramMessage(chatId,summary);
     }
 
     // Documents
     if (message.document) {
       await sendTelegramMessage(
+       chatId,
         "📄 PDF import will be available soon."
       );
     }
@@ -190,6 +213,7 @@ NO ❌  Cancel Import`;
     console.error(error);
 
    await sendTelegramMessage(
+  chatId,
   `❌ Failed to process timetable
 
 ${error instanceof Error ? error.message : String(error)}`

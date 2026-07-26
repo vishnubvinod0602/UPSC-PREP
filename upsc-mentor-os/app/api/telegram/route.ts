@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import { sendTelegramMessage } from "@/lib/telegram";
 
 export async function GET() {
+  let chatId ="";
   try {
     await sendTelegramMessage(
+      chatId,
       "✅ UPSC Mentor OS is connected successfully!"
     );
 

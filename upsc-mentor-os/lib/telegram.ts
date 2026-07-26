@@ -1,6 +1,7 @@
-export async function sendTelegramMessage(message: string) {
+export async function sendTelegramMessage(
+  chatId:string,
+  message: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_OWNER_ID;
 
   if (!token || !chatId) {
     throw new Error("Telegram environment variables are missing.");
@@ -24,8 +25,7 @@ export async function sendTelegramMessage(message: string) {
     throw new Error("Failed to send Telegram message.");
   }
 
-  return response.json();
-}
+  return response.json();}
 
 export async function getTelegramFile(fileId: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -63,4 +63,41 @@ export async function downloadTelegramFile(filePath: string) {
   }
 
   return response.arrayBuffer();
+}
+export async function sendTelegramDocument(
+  chatId: string,
+  file: Buffer,
+  filename: string
+) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+
+  if (!token) {
+    throw new Error("Telegram bot token is missing.");
+  }
+
+  const form = new FormData();
+
+  form.append("chat_id", chatId);
+const calendarFile = new File(
+  [new Uint8Array(file)],
+  filename,
+  {
+    type: "text/calendar",
+  }
+);
+form.append("document", calendarFile);
+
+  const response = await fetch(
+    `https://api.telegram.org/bot${token}/sendDocument`,
+    {
+      method: "POST",
+      body: form,
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
 }
