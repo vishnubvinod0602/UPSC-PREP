@@ -1,6 +1,7 @@
 import { ai } from "./gemini";
 import { SCHEDULE_PROMPT } from "./prompts";
 import type { ScheduleEntry } from "./types";
+import { ScheduleItem } from "@/types/schedule";
 
 export async function extractSchedule(
   image: Buffer,

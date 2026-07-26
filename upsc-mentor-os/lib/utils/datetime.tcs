@@ -1,0 +1,15 @@
+import { DateTime } from "luxon";
+import { COACHING_TIMEZONE } from "@/lib/constants/timezone";
+
+export function parseCoachingDateTime(
+  date: string,
+  time: string
+) {
+  return DateTime.fromFormat(
+    `${date} ${time}`,
+    "dd-MM-yyyy h:mm a",
+    {
+      zone: COACHING_TIMEZONE,
+    }
+  );
+}

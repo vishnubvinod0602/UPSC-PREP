@@ -1,15 +1,5 @@
 import { importRows } from "@/lib/googleSheets/server";
-
-export interface ScheduleItem {
-   id?: string;
-  subject: string;
-  faculty?: string;
-  venue?: string;
-  mode?: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+import { ScheduleItem } from "@/types/schedule";
 
 export async function importSchedule(
   schedule: ScheduleItem[]

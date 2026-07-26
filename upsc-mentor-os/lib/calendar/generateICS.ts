@@ -1,15 +1,8 @@
 import { createEvents, EventAttributes } from "ics";
+import { DateTime } from "luxon";
+import { ScheduleItem } from "@/types/schedule";
 
-export interface ScheduleItem {
-      id?: string;
-  subject: string;
-  faculty?: string;
-  venue?: string;
-  mode?: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-}
+
 
 function parseDate(date: string) {
   const [day, month, year] = date.split("-").map(Number);
