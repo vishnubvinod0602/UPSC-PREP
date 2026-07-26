@@ -1,92 +1,61 @@
-import { createEvents, EventAttributes } from "ics";
 import { DateTime } from "luxon";
-import { ScheduleItem } from "@/types/schedule";
+import type { ScheduleEvent } from "@/types/schedule";
 
-
-
-function parseDate(date: string) {
-  const [day, month, year] = date.split("-").map(Number);
-  return { day, month, year };
+function escapeICS(text: string): string {
+  return text
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
 }
 
-function parseTime(time: string) {
-  const cleaned = time.trim().toUpperCase();
-
-  const match = cleaned.match(
-    /^(\d{1,2}):(\d{2})\s*(AM|PM)$/
-  );
-
-  if (match) {
-    let hour = Number(match[1]);
-    const minute = Number(match[2]);
-    const period = match[3];
-
-    if (period === "PM" && hour !== 12) {
-      hour += 12;
-    }
-
-    if (period === "AM" && hour === 12) {
-      hour = 0;
-    }
-
-    return { hour, minute };
-  }
-
-  // 24-hour format fallback
-  const [hour, minute] = cleaned.split(":").map(Number);
-
-  return {
-    hour,
-    minute,
-  };
+function formatICSDate(dt: DateTime): string {
+  return dt.toFormat("yyyyLLdd'T'HHmmss");
 }
-
 
 export async function generateICS(
-  schedule: ScheduleItem[]
+  schedule: ScheduleEvent[]
 ): Promise<Buffer> {
-  const events: EventAttributes[] = schedule.map((item) => {
-    const d = parseDate(item.date);
+  const now = DateTime.utc().toFormat("yyyyLLdd'T'HHmmss'Z'");
 
-    const start = parseTime(item.startTime);
-    console.log(item.startTime);
-    console.log(item.endTime);
-    const end = parseTime(item.endTime);
+  const events = schedule
+    .map((event) => {
+      const start = DateTime.fromISO(event.startLocal);
+      const end = DateTime.fromISO(event.endLocal);
 
-    return {
-      title: item.subject,
-      description: [
-        `Faculty: ${item.faculty ?? "-"}`,
-        `Mode: ${item.mode ?? "-"}`,
-      ].join("\n"),
-      location: item.venue ?? "",
-      start: [
-        d.year,
-        d.month,
-        d.day,
-        start.hour,
-        start.minute,
-      ],
-      end: [
-        d.year,
-        d.month,
-        d.day,
-        end.hour,
-        end.minute,
-      ],
-      status: "CONFIRMED",
-      busyStatus: "BUSY",
-    };
-  });
+      return `BEGIN:VEVENT
+UID:${crypto.randomUUID()}
+DTSTAMP:${now}
+SUMMARY:${escapeICS(event.subject)}
+DESCRIPTION:${escapeICS(
+  `Faculty: ${event.faculty || "-"}\nMode: ${event.mode || "-"}`
+)}
+LOCATION:${escapeICS(event.venue || "")}
+DTSTART;TZID=Asia/Kolkata:${formatICSDate(start)}
+DTEND;TZID=Asia/Kolkata:${formatICSDate(end)}
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT`;
+    })
+    .join("\r\n");
 
-  return new Promise((resolve, reject) => {
-    createEvents(events, (error, value) => {
-      if (error) {
-        reject(error);
-        return;
-      }
+  const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//UPSC Mentor OS//Schedule//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Fortune IAS Schedule
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+${events}
+END:VCALENDAR`;
 
-      resolve(Buffer.from(value));
-    });
-  });
+  return Buffer.from(ics.replace(/\n/g, "\r\n"));
 }
