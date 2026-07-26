@@ -1,5 +1,8 @@
 
-const BASE_URL = "/api/sheets";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_APP_URL
+    ? `${process.env.NEXT_PUBLIC_APP_URL}/api/sheets`
+    : "http://localhost:3000/api/sheets";
 
 export async function fetchSheet<T>(
   sheet: string,
