@@ -20,8 +20,13 @@ export async function generateICS(
 
   const events = schedule
     .map((event) => {
-      const start = DateTime.fromISO(event.startLocal);
-      const end = DateTime.fromISO(event.endLocal);
+      const start = DateTime.fromISO(event.startLocal, {
+  setZone: true,
+});
+
+const end = DateTime.fromISO(event.endLocal, {
+  setZone: true,
+});
 console.log({
   subject: event.subject,
   startLocal: event.startLocal,
