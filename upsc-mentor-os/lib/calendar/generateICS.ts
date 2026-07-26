@@ -43,6 +43,8 @@ export async function generateICS(
     const d = parseDate(item.date);
 
     const start = parseTime(item.startTime);
+    console.log(item.startTime);
+    console.log(item.endTime);
     const end = parseTime(item.endTime);
 
     return {
