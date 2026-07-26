@@ -190,7 +190,7 @@ NO ❌  Cancel Import`;
     console.error(error);
 
     await sendTelegramMessage(
-      "❌ Failed to process the timetable."
+      '❌ Failed to process timetable\n\n${error instanceof Error ? error.message : String(error)}'
     );
 
     return NextResponse.json(
