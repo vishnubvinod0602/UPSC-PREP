@@ -3,7 +3,7 @@ import {
   fetchSheet,
   updateRow,
   
-} from "@/lib/googleSheets/client";
+} from "@/lib/googleSheets/server";
 
 import type { PendingImport } from "@/lib/types/pendingImport";
 
