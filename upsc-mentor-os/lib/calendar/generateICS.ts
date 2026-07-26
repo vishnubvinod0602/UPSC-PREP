@@ -22,7 +22,11 @@ export async function generateICS(
     .map((event) => {
       const start = DateTime.fromISO(event.startLocal);
       const end = DateTime.fromISO(event.endLocal);
-
+console.log({
+  subject: event.subject,
+  startLocal: event.startLocal,
+  parsed: formatICSDate(start),
+});
       return `BEGIN:VEVENT
 UID:${crypto.randomUUID()}
 DTSTAMP:${now}
